@@ -100,7 +100,7 @@ if INST_TOKEN:
 # Bloque MICRO: arquitectura de microservicios
 MICRO = r'''(
 microservice*
-OR "micro-service*"
+OR "micro-service"
 OR "microservices architecture"
 )'''
 
@@ -109,15 +109,15 @@ MONO = r'''(
 monolith*
 OR "monolithic architecture"
 OR "modular monolith"
-OR "monolithic application*"
+OR "monolithic application"
 )'''
 
 # Bloque CLOUD: plataformas cloud
 CLOUD = r'''(
 "cloud computing"
 OR "cloud-native"
-OR "cloud platform*"
-OR "cloud environment*"
+OR "cloud platform"
+OR "cloud environment"
 OR "cloud infrastructure"
 OR "cloud services"
 OR "public cloud"
@@ -132,7 +132,7 @@ OR serverless
 COMPARA = r'''(
 compar*
 OR versus
-OR "trade-off*"
+OR "trade-off"
 OR tradeoff*
 OR advantage*
 OR benefit*
@@ -146,10 +146,10 @@ OR "pros and cons"
 MIGRA = r'''(
 migrat*
 OR decomposition
-OR "monolith to microservice*"
+OR "monolith to microservice"
 OR refactor*
 OR modernization
-OR "legacy system*"
+OR "legacy system"
 OR "service granularity"
 OR "strangler"
 )'''
@@ -177,9 +177,9 @@ CRITERIOS = r'''(
 OR "decision framework"
 OR "decision model"
 OR "decision support"
-OR "architectural decision*"
+OR "architectural decision"
 OR "architecture selection"
-OR "architectural style*"
+OR "architectural style"
 OR "technical debt"
 OR maintainability
 OR complexity
@@ -262,6 +262,9 @@ def search_scopus(query_name, raw_query):
         query += f" AND {EXTRA_FILTERS}"
     if OPEN_ACCESS_ONLY:
         query += " AND OPENACCESS(1)"
+    # Scopus se lleva mejor con la consulta en una sola línea
+    query = " ".join(query.split())
+    print(f"\n[{query_name}] QUERY: {query}")
 
     all_entries = []
     raw_pages = []
@@ -312,6 +315,7 @@ def search_scopus(query_name, raw_query):
 
         if total_results == 0:
             print(f"[{query_name}] Sin resultados bibliográficos.")
+            print(f"[{query_name}] Respuesta de Scopus: {str(results)[:600]}")
             break
 
         if not entries:
