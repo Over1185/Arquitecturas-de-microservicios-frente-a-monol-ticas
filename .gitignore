@@ -1,0 +1,6 @@
+.env
+papers/
+scopus_prisma_multisearch/
+pendientes_descarga_manual.csv
+brechas_extraidas.xlsx
+__pycache__/
